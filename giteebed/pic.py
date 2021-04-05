@@ -7,7 +7,7 @@ __author__ = "FogSong"
 # Version:1.0.0  `
 # ====#====#====#====
 
-import base64,time
+import base64,time,hashlib
 import requests
 
 
@@ -25,7 +25,7 @@ class Pic(object):
             return self.__upload(base64_data, path, message)
 
     def upload_with_time_path(self, file_path: str, message: str = "pic"):
-        path: str = f"{time.strftime(r'%Y/%m/%d/%H')}.{file_path.split('.')[1]}"
+        path: str = f"{time.strftime(r'%Y/%m/%d/%H/')}{hashlib.md5(file_path+message).hexdigest()}.{file_path.split('.')[1]}"
         return self.upload(file_path, path, message)
 
     def __upload(self, base64_data: str, path, message: str):
